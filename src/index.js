@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 
 const width = 1300;
 const height = 600;
-const margin = {"left":50,"bottom":10,"right":50,"top":10}
+const margin = {"left":60,"bottom":30,"right":50,"top":30}
 
 d3.select("body").append("svg").attr("height",height).attr("width",width)
 .attr("x",margin.left).attr("id","plot");
@@ -34,8 +34,25 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     .attr('width',xScale.bandwidth())
     .attr("height",yScale.bandwidth());
 
-    const xAxis=
-    const yAxis=
+    const xAxis= d3.axisBottom().scale(xScale).tickValues(
+        xScale.domain().filter(year=>year % 10 === 0));
+
+    const yAxis= d3.axisLeft().scale(yScale).tickValues(yScale.domain())
+    .tickFormat(function (month) {
+      var date = new Date(0);
+      date.setUTCMonth(month-1);
+      var format = d3.timeFormat('%B');
+      return format(date);
+    });
+
+    d3.select("#plot").append("g")
+    .attr("transform",`translate(0,${height-margin.bottom})`).call(xAxis).attr("id","xaxis")
+    
+
+    d3.select("#plot").append("g").attr("id","yaxis").call(yAxis).attr("transform",`translate(${margin.left},0)`);
+    d3.select("#plot").call(Legend(d3.scaleSequential([0, 100], d3.interpolateViridis), {
+        title: "Temperature (°F)"
+      }))
 })
 
 
