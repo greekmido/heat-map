@@ -1,5 +1,7 @@
 import './index.css';
 import * as d3 from 'd3'
+import { axisBottom } from 'd3';
+import { schemeBrBG } from 'd3';
 
 const width = 1300;
 const height = 600;
@@ -46,16 +48,27 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     });
 
     d3.select("#plot").append("g")
-    .attr("transform",`translate(0,${height-margin.bottom})`).call(xAxis).attr("id","xaxis")
+    .attr("id","xaxis")
+    .attr("transform",`translate(0,${height-margin.bottom})`).call(xAxis)
     
 
-    d3.select("#plot").append("g").attr("id","yaxis").call(yAxis).attr("transform",`translate(${margin.left},0)`);
-    d3.select("#plot").call(Legend(d3.scaleSequential([0, 100], d3.interpolateViridis), {
-        title: "Temperature (°F)"
-      }))
+    d3.select("#plot").append("g")
+    .attr("id","yaxis")
+    .attr("transform",`translate(${margin.left},0)`).call(yAxis);
+   
+
+      var legendAxis = d3.scaleLinear().domain(colScale.domain().map((el)=>el+1)).range([0,200]);
+
+      const xlegendscale = d3.scaleLinear().domain(colScale.domain()).range([schemeBrBG[11]])
+
+    d3.select("body").append("svg").attr("id","legend").append("g").call(d3.axisBottom().scale(legendAxis))
+    .attr("transform",`translate(0,25)`)
+    
+    
+    d3.select("#legend").selectAll('rect').data(d3.range(d3.min(data.monthlyVariance,(d)=>d.variance),d3.max(data.monthlyVariance,(d)=>d.variance+1),0.1))
+    .enter().append("rect").attr("x",(d)=>legendAxis(d)).attr("y","0").attr("width","2px").attr("height","20")
+    .attr("fill",(d)=>colScale(d))
 })
-
-
 
 
 
