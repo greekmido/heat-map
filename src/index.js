@@ -3,14 +3,22 @@ import * as d3 from 'd3'
 //setting the size and margin for main svg
 const width = 1300;
 const height = 600;
-const margin = {"left":60,"bottom":30,"right":50,"top":30}
-
+const margin = {"left":60,"bottom":30,"right":50,"top":30};
+var isLoaded = false;
+if(!isLoaded){
+    d3.select("body").append("h1").html(`<div class="spinner">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>`).attr("id","loading")
+}
 d3.select("body").append("svg").attr("height",height).attr("width",width)
 .attr("x",margin.left).attr("id","plot");
 
 //fetching our data
 fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json")
 .then((response)=>{
+    isLoaded=true;
     return response.json();
 })
 .then((data)=>{
@@ -78,9 +86,12 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     .enter().append("rect").attr("x",(d)=>testingscale(d)).attr("y",50-30).attr("width","1").attr("height","20")
     .attr("fill",(d)=>colorRange(d));
     
-    d3.select("#legend").append("text").text("C").attr("y",16)
-
+    d3.select("#legend").append("text").text("C").attr("y",16);
+    d3.select("#loading").remove();
 })
+
+
+
 
 
 
