@@ -1,0 +1,21 @@
+body{
+    background-color: rgb(216,222,210);
+    text-align: center;
+}
+#legend{
+    position:absolute;
+    left: 600px;
+    top: 110px;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 2px;
+    pointer-events: none;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border-radius: 8px;
+    opacity: 0;
+    z-index: 99999;
+  }
