@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/greekmido/heat-map"
+    "url": "git+https://github.com/shellparse/heat-map"
   },
   "author": "mohammad alameri",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/greekmido/heat-map/issues"
+    "url": "https://github.com/shellparse/heat-map/issues"
   },
-  "homepage": "https://greekmido.github.io/heat-map/",
+  "homepage": "https://shellparse.github.io/heat-map/",
   "devDependencies": {
     "css-loader": "^6.6.0",
     "gh-pages": "^3.2.3",
